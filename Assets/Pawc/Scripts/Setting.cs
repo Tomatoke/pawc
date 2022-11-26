@@ -32,16 +32,16 @@ public class JsonDictionary<TKey, TValue> : ISerializationCallbackReceiver {
       }
   }
   [SerializeField][UsedImplicitly] private KeyValuePair[] keyValuePairs = default;
-  private Dictionary<TKey, TValue> dictionary;
-  public Dictionary<TKey, TValue> Dictionary => dictionary;
-  public JsonDictionary(Dictionary<TKey, TValue> d) {
+  private SortedDictionary<TKey, TValue> dictionary;
+  public SortedDictionary<TKey, TValue> Dictionary => dictionary;
+  public JsonDictionary(SortedDictionary<TKey, TValue> d) {
     dictionary = d;
   }
   void ISerializationCallbackReceiver.OnBeforeSerialize() {
     keyValuePairs = dictionary.Select(p => new KeyValuePair(p.Key, p.Value)).ToArray();
   }
   void ISerializationCallbackReceiver.OnAfterDeserialize() {
-    dictionary = keyValuePairs.ToDictionary(p => p.Key, p => p.Value);
+    dictionary = new SortedDictionary<TKey, TValue>(keyValuePairs.ToDictionary(p => p.Key, p => p.Value));
     keyValuePairs = null;
   }
 }

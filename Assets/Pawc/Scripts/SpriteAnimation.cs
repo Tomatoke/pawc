@@ -35,10 +35,6 @@ public class SpriteAnimation : MonoBehaviour {
     rt.sizeDelta = new Vector2(w, h);
   }
 
-  public void ChangeScale(float scale) {
-    rt.localScale = Vector2.one * scale;
-  }
-
   public void ChangeSprite(string path, Vector2Int div) {
     var tex = LoadTexture(path);
     if (tex == null) {

@@ -13,7 +13,8 @@ using B83.Win32;
 public class Main : MonoBehaviour {
   private string SettingFilePath { get => "settings.json"; }
   private string SettingDefaultLabel { get => "Default"; }
-  private Dictionary<string, Setting> settings;
+  private SortedDictionary<string, Setting> settings;
+  [SerializeField] private RectTransform CharactersUi;
   [SerializeField] private Dropdown loadUi;
   [SerializeField] private TMP_InputField labelUi;
   [SerializeField] private TMP_InputField divUiX;
@@ -118,7 +119,7 @@ public class Main : MonoBehaviour {
   }
 
   public void DefaultSettings() {
-    settings = new Dictionary<string, Setting>();
+    settings = new SortedDictionary<string, Setting>();
     settings.Add(SettingDefaultLabel, new Setting(div, pattern));
     UpdateLoadList();
   }
@@ -148,9 +149,7 @@ public class Main : MonoBehaviour {
 
   public void OnChangeScale(Dropdown change) {
     float[] scales = { 2.0f, 1.0f, 0.5f };
-    foreach(var sa in sas) {
-      sa.ChangeScale(scales[change.value]);
-    }
+    CharactersUi.localScale = Vector3.one * scales[change.value];
   }
 
   public void OnChangeSpeed(Dropdown change) {
